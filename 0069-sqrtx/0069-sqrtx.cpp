@@ -13,26 +13,6 @@ public:
     
     int mySqrt(int x) 
     {
-        // 어떻게 제곱근을 구해야 할까요.
-        // 사실은 제곱근을 구하는게 아닐 수 있다.
-        // 1~x까지 이분탐색을 하면
-        // mid * mid 해서 가장 x에 가까운 값을 지닌 무언가를 반환하면 되는 것 같아요.
-        
-        int l = 0;
-        int r = x;
-        
-        while (l <= r)
-        {
-            long long m = (l + r) / 2;
-            
-            if (m * m > x)
-                r = m - 1;
-            else if (m * m < x)
-                l = m + 1;
-            else
-                return m;
-        }
-        
-        return r;
+        return (int)pow(x, 0.5f);
     }
 };
