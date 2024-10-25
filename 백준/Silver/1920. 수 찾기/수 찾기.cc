@@ -1,3 +1,4 @@
+///////////////////////////////////
 #include <iostream>
 #include <algorithm>
 #include <vector>
@@ -16,32 +17,41 @@ class Boj
 {
 private:
     int N;
+    vector<int> v;
 
 public:
     void input()
     {
+        cin >> N;
+        v.resize(N);
+        for (int i = 0; i < N; ++i)
+            cin >> v[i];
+
+        sort(v.begin(), v.end());
     }
 
     void progress()
     {
-        set<int> s;
-        
-        int input = 0;
-
+        int cur;
         cin >> N;
         for (int i = 0; i < N; ++i)
         {
-            cin >> input;
-            s.insert(input);
-        }
+            cin >> cur;
+            int l = 0;
+            int r = v.size() - 1;
 
-        int answer = 0;
+            while (l <= r)
+            {
+                int m = (l + r) / 2;
 
-        cin >> N;
-        for (int i = 0; i < N; ++i)
-        {
-            cin >> input;
-            printf("%d\n", (s.find(input) != s.end() ? 1 : 0));
+                if (v[m] == cur)
+                    break;
+                else if (v[m] < cur)
+                    l = m + 1;
+                else
+                    r = m - 1;
+            }
+            printf("%d\n", l <= r ? 1 : 0);
         }
         
         return;
