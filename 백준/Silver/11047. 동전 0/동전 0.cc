@@ -1,3 +1,4 @@
+
 ///////////////////////////////////
 #include <iostream>
 #include <algorithm>
@@ -29,10 +30,11 @@ public:
 
     void progress()
     {
-        int r = N - 1;
-        int answer = 0;
+        int r = N - 1, answer = 0;
+
         while (K != 0)
-            coins[r] <= K ? K -= coins[r], ++answer : --r;
+            coins[r] <= K ? answer += K / coins[r], K %= coins[r] : --r;
+
         cout << answer;
     }
 
