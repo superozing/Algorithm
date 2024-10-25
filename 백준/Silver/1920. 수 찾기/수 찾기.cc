@@ -37,6 +37,13 @@ public:
         for (int i = 0; i < N; ++i)
         {
             cin >> cur;
+
+            if (v.front() > cur || v.back() < cur)
+            {
+                printf("0\n");
+                continue;
+            }
+
             int l = 0;
             int r = v.size() - 1;
 
@@ -51,6 +58,7 @@ public:
                 else
                     r = m - 1;
             }
+
             printf("%d\n", l <= r ? 1 : 0);
         }
         
