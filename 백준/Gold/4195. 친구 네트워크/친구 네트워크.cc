@@ -1,3 +1,4 @@
+
 ///////////////////////////////////
 #include <iostream>
 #include <algorithm>
@@ -46,7 +47,7 @@ public:
             for (int j = 0; j < testCase; ++j)
             {
                 cin >> a >> b;
-                cout << Union(a, b) << '\n';
+                printf("%d\n", Union(a, b));
             }
             um.clear();
         }
