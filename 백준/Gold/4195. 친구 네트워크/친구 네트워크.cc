@@ -1,4 +1,3 @@
-
 ///////////////////////////////////
 #include <iostream>
 #include <algorithm>
@@ -72,23 +71,26 @@ private:
         auto _x = Find(x);
         auto _y = Find(y);
 
+        // 두 데이터가 이전에 친구가 아닐 경우
         if (_x.parent != _y.parent)
         {
+            // root 통일
             um[_y.parent].parent = _x.parent;
-            um[_x.parent].cnt += um[_y.parent].cnt;
 
-            um[_y.parent].cnt = 1;
+            // cnt 이전
+            um[_x.parent].cnt += um[_y.parent].cnt;
         }
 
+        // 찾은 count를 반환해요.
         return um[_x.parent].cnt;
     }
 
     fr Find(string& x)
     {
+        // 경로 통일
         if (um[x].parent != x)
-        {
             um[x].parent = Find(um[x].parent).parent;
-        }
+
         return um[x];
     }
 
