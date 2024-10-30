@@ -1,4 +1,3 @@
-
 ///////////////////////////////////
 #include <iostream>
 #include <algorithm>
@@ -55,13 +54,13 @@ private:
     // 사이클 여부 반환
     bool Union(int a, int b)
     {
-        int _a = Find(a);
-        int _b = Find(b);
+        a = Find(a);
+        b = Find(b);
 
-        if (vtx[_a] == _b || vtx[_b] == _a)
+        if (vtx[a] == b || vtx[b] == a)
             return true;
 
-        vtx[_a] = _b;
+        vtx[a] = b;
 
         return false;
     }
