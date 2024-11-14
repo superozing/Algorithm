@@ -29,38 +29,32 @@ public:
 
     void progress()
     {
-        cin >> prev >> cur;
-
+        cin >> cur;
         bool isAscending = false;
 
-        if (prev < cur)
-            isAscending = true;
-
-        prev = cur;
-
-        for (int i = 0; i < 6; ++i)
+        if (cur == 1)
         {
+            isAscending = true;
+        }
+        else if (cur != 8)
+        {
+            printf("mixed");
+            return;
+        }
+
+        for (int i = 0; i < 7; ++i)
+        {
+            prev = cur;
             cin >> cur;
 
-            if (prev < cur)
-            {
-                if (!isAscending)
-                {
-                    printf("mixed");
-                    return;
-                }
-            }
-            else if (isAscending)
+            if ((prev < cur && !isAscending) || (prev > cur && isAscending))
             {
                 printf("mixed");
                 return;
             }
-
-            prev = cur;
         }
 
         printf(isAscending ? "ascending" : "descending");
-
     } 
 
 private:
