@@ -15,8 +15,6 @@
 
 using namespace std;
 
-constexpr auto exitFlag = -999;
-
 class Boj
 {
 private:
@@ -37,33 +35,26 @@ public:
         {
             cin >> s;
 
-            int vpsCheck = 0;
+            int bracketCount = 0;
 
             for (char c : s)
             {
                 switch (c)
                 {
                 case '(':
-                {
-                    ++vpsCheck;
-                }
-                break;
+                    ++bracketCount;
+                    break;
                 case ')':
-                {
-                    if (vpsCheck == 0)
-                        vpsCheck = exitFlag;
-
-                    --vpsCheck;
-                }
-                break;
+                    --bracketCount;
+                    break;
                 }
 
                 // 문자열 순회 중, vps가 아닐 경우
-                if (vpsCheck == exitFlag)
+                if (bracketCount < 0)
                     break;
             }
 
-            printf(vpsCheck == 0 ? "YES\n" : "NO\n");
+            printf(bracketCount == 0 ? "YES\n" : "NO\n");
         }
     }
 
