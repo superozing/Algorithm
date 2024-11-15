@@ -21,7 +21,7 @@ class Boj
 private:
     int N;
     
-    list<int> q;
+    queue<int> q;
 
 public:
 
@@ -30,7 +30,7 @@ public:
         cin >> N;
 
         for (int i = 1; i <= N; ++i)
-            q.push_back(i);
+            q.push(i);
     }
 
     void progress()
@@ -38,11 +38,11 @@ public:
         while (q.size() != 1)
         {
             // 1. 맨 위의 카드를 버려요
-            q.pop_front();
+            q.pop();
 
             // 2. 그 다음 카드를 아래로 집어넣어요.
-            q.push_back(q.front());
-            q.pop_front();
+            q.push(q.front());
+            q.pop();
         }
 
 
