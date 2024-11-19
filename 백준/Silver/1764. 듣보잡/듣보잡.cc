@@ -1,67 +1,79 @@
+///////////////////////////////////////////
 #include <iostream>
-#include <set>
+#include <algorithm>
 #include <vector>
+#include <list>
+#include <stack>
+#include <set>
+#include <map>
 #include <string>
+#include <queue>
+#include <deque>
+#include <unordered_map>
+#include <unordered_set>
+#include <bitset>
+#include <cmath>
 
 using namespace std;
 
-class BAEKJOON // 듣보잡
+#define endl "\n"
+
+class Boj
 {
+private:
+    int N; // 듣도 못한 분
+    int M; // 보도 못한 분
+
+    unordered_set<string> us;
+    vector<string> answer;
+
 public:
-    int N; // 듣도 못한 사람
-    int M; // 보도 못한 사람
+    void input()
+    {
+        cin >> N >> M;
 
-    set<string> s; // 듣도 못한 사람 명단
+        string s;
+        while (N--)
+        {
+            cin >> s;
+            us.insert(s);
+        }
+    }
 
-    set<string> v; // 듣도 보도 못한 사람 명단
+    void progress()
+    {
+        string s;
+        while (M--)
+        {
+            cin >> s;
 
-public:
-    BAEKJOON() { init(); }
-    void init();
-    void progress();
+            if (us.find(s) != us.end())
+                answer.push_back(s);
+        }
+
+        cout << answer.size() << endl;
+        
+        sort(answer.begin(), answer.end());
+
+        for (string& s : answer)
+            cout << s << endl;
+    }
 
 private:
+
 };
-
-void BAEKJOON::init()
-{
-    cin >> N >> M;
-
-    string buf{};
-
-    // 듣
-    for (int i = 0; i < N; ++i)
-    {
-        cin >> buf;
-        s.insert(buf);
-    }
-}
-
-void BAEKJOON::progress()
-{
-    string buf{};
-
-    // 보
-    for (int i = 0; i < M; ++i)
-    {
-        cin >> buf;
-
-        if (s.find(buf) != s.end())
-            v.insert(buf);
-    }
-
-    cout << v.size() << endl;
-
-    // 듣보
-    for (auto& it : v)
-        cout << it << endl;
-
-}
 
 int main()
 {
-    BAEKJOON b;
-    b.progress();
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    Boj boj;
+
+    boj.input();
+    boj.progress();
 
     return 0;
 }
+
