@@ -42,12 +42,16 @@ public:
 
     void progress()
     {
+        string answer;
         string s;
         while (M--)
         {
             cin >> s;
-            cout << um[s] << endl;
+            answer += um[s];
+            answer += endl;
         }
+
+        cout << answer;
     }
 
 private:
