@@ -1,89 +1,92 @@
+///////////////////////////////////////////
 #include <iostream>
 #include <algorithm>
 #include <vector>
 #include <list>
+#include <stack>
 #include <set>
 #include <map>
 #include <string>
 #include <queue>
+#include <deque>
 #include <unordered_map>
 #include <unordered_set>
+#include <bitset>
 #include <cmath>
 
 using namespace std;
 
+#define endl ("\n")
+
 class Boj
 {
 private:
-    int N; // 한 변의 길이
-    vector<vector<int>> paper; // 색종이
-
-    int whitePaper = 0;
-    int bluePaper = 0;
+    int N;
+    int white = 0, blue = 0;
+    vector<vector<int>> grid;
 
 public:
+
     void input()
     {
         cin >> N;
-        paper.resize(N, vector<int>(N));
+
+        grid.resize(N, vector<int>(N));
 
         for (int i = 0; i < N; ++i)
         for (int j = 0; j < N; ++j)
-            cin >> paper[i][j];
-
+           cin >>grid[i][j];
     }
 
     void progress()
     {
-        cut(0, N, 0, N);
+        divAndCon(0, 0, N);
 
-        cout << whitePaper << endl << bluePaper;
+        cout << white << endl << blue;
     }
 
-    void cut(int l, int r, int t, int b)
+private:
+
+    void divAndCon(int l, int t, int n)
     {
+        int firstColor = grid[l][t];
+        bool divide = false;
 
-        // 가장 첫 부분을 현재 색상으로 잡아요.
-        int curColor = paper[l][t];
-        int cutFlag = false;
-
-
-        for (int i = l; i < r; ++i)
+        for (int i = l; i < l + n; ++i)
+        for (int j = t; j < t + n; ++j)
         {
-            for (int j = t; j < b; ++j)
+            if (firstColor != grid[i][j])
             {
-                if (paper[i][j] != curColor)
-                {
-                    cutFlag = true;
-                    break;
-                }
-            }
-            if (cutFlag)
+                divide = true;
                 break;
+            }
         }
 
-        if (cutFlag)
+        if (divide)
         {
-            cut(l, (l + r) / 2,      t, (t + b) / 2); // 좌상단
-            cut((l + r) / 2,    r,          t, (t + b) / 2); // 우상단
-            cut(l, (l + r) / 2,      (t + b) / 2,    b); // 좌하단
-            cut((l + r) / 2,    r,          (t + b) / 2,    b); // 우하단
+            int len = n / 2;
+
+            divAndCon(l,         t,          len);
+            divAndCon(l + len,   t,          len);
+            divAndCon(l,         t + len,    len);
+            divAndCon(l + len,   t + len,    len);
         }
         else
-            curColor ? ++bluePaper : ++whitePaper;
+            firstColor ? ++blue : ++white;
 
         return;
     }
 
-private:
 };
 
 int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
+    cout.tie(NULL);
 
     Boj boj;
+
     boj.input();
     boj.progress();
 
