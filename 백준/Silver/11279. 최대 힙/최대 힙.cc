@@ -1,53 +1,78 @@
+///////////////////////////////////////////
 #include <iostream>
+#include <algorithm>
+#include <vector>
+#include <list>
+#include <stack>
+#include <set>
+#include <map>
+#include <string>
 #include <queue>
+#include <deque>
+#include <unordered_map>
+#include <unordered_set>
+#include <bitset>
+#include <cmath>
 
 using namespace std;
 
+#define endl ("\n")
 
-class BAEKJOON // 최대 힙
+class Boj
 {
-public:
+private:
+    int N;
+
     priority_queue<int> pq;
-     long long         count;
 
 public:
-    BAEKJOON() { progress(); }
-    void progress();
 
-};
-
-void BAEKJOON::progress()
-{
-    scanf("%lld", &count);
-
-    int    buf = 0;
-
-    for (int i = 0; i < count; ++i)
+    void input()
     {
-        scanf("%d", &buf);
+        cin >> N;
+    }
 
-        if (buf != 0)
+    void progress()
+    {
+        int in;
+        while (N--)
         {
-            pq.push(buf);
-        }
-        else
-        {
-            if (pq.empty())
+            cin >> in;
+
+            if (in == 0)
             {
-                printf("0\n");
+                if (!pq.empty())
+                {
+                    cout << pq.top() << endl;
+                    pq.pop();
+                }
+                else
+                {
+                    cout << 0 << endl;
+                }
             }
             else
             {
-                printf("%d\n", pq.top());
-                pq.pop();
+                pq.push(in);
             }
         }
     }
-}
+
+private:
+
+};
 
 int main()
 {
-    BAEKJOON b;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    Boj boj;
+
+    boj.input();
+    boj.progress();
 
     return 0;
 }
+
