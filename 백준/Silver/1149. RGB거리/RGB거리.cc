@@ -37,7 +37,6 @@ public:
         cin >> N;
         RGB.resize(N + 1, vector<int>(3));
 
-        int a, b, c;
         for (int i = 1; i <= N; ++i)
         {
             for (int j = 0; j < 3; ++j)
@@ -59,12 +58,9 @@ public:
 
         for (int i = 2; i <= N; ++i)
         {
-            auto& prev = RGB[i - 1];
-            auto& cur = RGB[i];
-
-            cur[r] += min(prev[g], prev[b]);
-            cur[g] += min(prev[r], prev[b]);
-            cur[b] += min(prev[r], prev[g]);
+            RGB[i][r] += min(RGB[i - 1][g], RGB[i - 1][b]);
+            RGB[i][g] += min(RGB[i - 1][r], RGB[i - 1][b]);
+            RGB[i][b] += min(RGB[i - 1][r], RGB[i - 1][g]);
         }
 
         int answer = 1e9;
