@@ -1,110 +1,116 @@
+///////////////////////////////////////////
 #include <iostream>
-#include <vector>
-#include <string>
-#include <list>
-
 #include <algorithm>
+#include <vector>
+#include <list>
+#include <stack>
+#include <set>
+#include <map>
+#include <string>
+#include <queue>
+#include <deque>
+#include <unordered_map>
+#include <unordered_set>
+#include <bitset>
+#include <cmath>
 
 using namespace std;
 
-class BAEKJOON // 단지번호붙이기
+#define endl ("\n")
+
+struct pos
 {
-public:
-    int N;                  // 지도 길이 NxN
-    vector<string>  vMap;   // 지도
-
-    vector<int>     result; // 단지 정보를 저장해요.
-
-    int _arrX[4] = { 0, -1, 0, 1 };
-    int _arrY[4] = { -1, 0, 1, 0 };
-
-public:
-    BAEKJOON() { init(); }
-    void init();
-    void progress();
-
-private:
-    int search(int y, int x);
+    int y, x;
 };
 
-void BAEKJOON::init()
+class Boj
 {
-    cin >> N;
+private:
+    int N; // NxN grid
+    vector<string> grid;
 
-    vMap.resize(N);
+public:
 
-    // 지도 정보 입력받아 저장하기
-    for (int i = 0; i < N; ++i)
-        cin >> vMap[i];
-
-}
-
-typedef pair<int, int> pii;
-
-int BAEKJOON::search(int y, int x)
-{
-    vMap[y][x] = '0';
-
-    list<pii> q;
-    q.push_back({ y, x });
-
-    int Y = 0;
-    int X = 0;
-
-    int houseCount = 0;
-
-    while (!q.empty())
+    void input()
     {
-        // 큐의 첫 데이터 가져옴
-        pii ii = q.front();
-        q.pop_front();
+        cin >> N;
 
-        // 지운 집의 개수 ++
-        ++houseCount;
+        grid.resize(N);
+        for (int i = 0; i < grid.size(); ++i)
+            cin >> grid[i];
+    }
 
-        // 이번에는 for문 사용해보았어요.
-        for (int i = 0; i < 4; ++i)
+    void progress()
+    {
+        vector<int> answer;
+
+        for (int y = 0; y < grid.size(); ++y)
+        for (int x = 0; x < grid[0].size(); ++x)
+            if (grid[y][x] == '1')
+                answer.push_back(bfs({ y, x }));
+
+        cout << answer.size() << endl;
+
+        sort(answer.begin(), answer.end());
+
+        for (int it : answer)
+            cout << it << endl;
+    }
+
+private:
+
+    int dy[4]{ 0, 1, 0, -1 };
+    int dx[4]{ 1, 0, -1, 0 };
+
+    int bfs(pos s)
+    {
+        int cnt = 0;
+        queue<pos> q;
+
+        q.push(s);
+        
+        // visited 처리
+        grid[s.y][s.x] = '0';
+
+        while (!q.empty())
         {
-            Y = ii.first + _arrY[i];
-            X = ii.second + _arrX[i];
+            pos cur = q.front();
+            q.pop();
 
-            // 인덱스 범위를 벗어나지 않으면서, 지도에서 해당 위치에 집이 있을 때 집어넣기
-            if ((0 <= Y && Y < N && 0 <= X && X < N) && (vMap[Y][X] == '1'))
+            ++cnt;
+
+            for (int i = 0; i < 4; ++i)
             {
-                q.push_back({ Y, X });
-                vMap[Y][X] = '0'; // 이후 집어넣은 인덱스는 0으로 비우기
+                pos next = cur;
+                next.y += dy[i];
+                next.x += dx[i];
+
+                if (next.y >= 0 && next.y < N &&
+                    next.x >= 0 && next.x < N &&
+                    grid[next.y][next.x] == '1')
+                {
+                    grid[next.y][next.x] = '0';
+                    q.push(next);
+                }
             }
         }
+
+        return cnt;
     }
 
-    return houseCount;
-}
-
-void BAEKJOON::progress()
-{
-    // 모든 지도를 순회하면서, 만약 인덱스에 집이 있을 경우 탐색
-    for (int y = 0; y < N; ++y)
-    {
-        for (int x = 0; x < N; ++x)
-        {
-            if (vMap[y][x] == '1')
-                result.push_back(search(y, x));
-        }
-    }
-
-    sort(result.begin(), result.end());
-
-    // 결과 출력
-    cout << result.size() << endl;
-
-    for (auto& it : result)
-        cout << it << endl;
-}
+};
 
 int main()
 {
-    BAEKJOON b;
-    b.progress();
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    Boj boj;
+
+    boj.input();
+    boj.progress();
 
     return 0;
 }
+
