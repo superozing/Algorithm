@@ -43,7 +43,7 @@ private:
         string cmd;
         int eleCnt;
         string arr;
-        list<int> nums;
+        deque<int> nums;
         bool isAssending = true;
 
         // 세 가지를 해야겠죠?
@@ -92,9 +92,9 @@ private:
         cout << '[';
         if (isAssending)
         {
-            for (int it : nums)
+            for (int num : nums)
             {
-                cout << it;
+                cout << num;
                 if (size--)
                     cout << ',';
             }
