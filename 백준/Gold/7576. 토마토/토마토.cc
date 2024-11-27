@@ -1,17 +1,22 @@
-///////////////////////////////////////////https://www.acmicpc.net/problem/7576
+///////////////////////////////////////////
 #include <iostream>
 #include <algorithm>
 #include <vector>
 #include <list>
+#include <stack>
 #include <set>
 #include <map>
 #include <string>
 #include <queue>
+#include <deque>
 #include <unordered_map>
 #include <unordered_set>
+#include <bitset>
 #include <cmath>
 
 using namespace std;
+
+#define endl ("\n")
 
 struct pos
 {
@@ -21,91 +26,95 @@ struct pos
 class Boj
 {
 private:
-    int X, Y; // M: 가로, N: 세로
-    vector<vector<int>> box;
-    list<pos> q;
+    int N, M;
+    vector<vector<int>> grid;
+    vector<vector<int>> visited;
 
+    queue<pos> q;
 public:
+
     void input()
     {
-        cin >> X >> Y;
+        cin >> M >> N;
 
-        box.resize(Y, vector<int>(X));
+        grid.resize(N, vector<int>(M));
+        visited.resize(N, vector<int>(M, 1e9));
 
-        for (int y = 0; y < Y; ++y)
-        for (int x = 0; x < X; ++x)
-        {
-            cin >> box[y][x];
-            if (box[y][x] == 1)
-            {
-                box[y][x] = 0;
-                q.push_back({ y, x, 0 });
-            }
-            else if (box[y][x] == 0)
-            {
-                box[y][x] = 1e9;
-            }
-        }
+        for (int i = 0; i < N; ++i)
+        for (int j = 0; j < M; ++j)
+            cin >> grid[i][j];
     }
 
     void progress()
     {
-        // 0: 익지 않은 토마토
-        // 1: 익은 토마토
-        // -1: 토마토가 비어있는 칸
-        // 익은 토마토가 들어있는 모든 칸에 대해서 bfs를 돌리면 될 것 같아요.
-
-        while (!q.empty())
+        for (int i = 0; i < N; ++i)
+        for (int j = 0; j < M; ++j)
         {
-            pos cur = q.front();
-            q.pop_front();
-
-            cur.c++;
-
-            for (int i = 0; i < 4; ++i)
+            if (grid[i][j] == 1)
             {
-                pos np = cur;
-                np.y += dy[i];
-                np.x += dx[i];
-
-                // 1. 익지 않은 토마토이면서 첫 방문일 경우
-                // 2. 익지 않은 토마토이면서 첫 방문이 아니고, 
-                //    토마토 익는 기간이 기록된 것보다 짧을 경우
-                if (np.y < Y && np.y >= 0 &&
-                    np.x < X && np.x >= 0 &&
-                    box[np.y][np.x] > np.c && box[np.y][np.x] != -1)
-                {
-                    box[np.y][np.x] = np.c;
-                    q.push_back(np);
-                }
+                q.push({ i, j, 0 });
+                visited[i][j] = 0;
             }
-        } // while end
-
-
-
-        int answer = 0;
-        for (int y = 0; y < Y; ++y)
-        for (int x = 0; x < X; ++x)
-        {
-            if (box[y][x] == 1e9)
-            {
-                cout << -1;
-                return;
-            }
-            if (box[y][x] == -1)
-                continue;
-
-            answer = max(box[y][x], answer);
         }
 
-        cout << answer;
-        return;
+        bfs();
+        //for (int i = 0; i < N; ++i)
+        //{
+        //    for (int j = 0; j < M; ++j)
+        //    {
+        //        cout << visited[i][j] << " ";
+        //    }
+        //    cout << endl;
+        //}
+
+        int answer = 0;
+        for (int i = 0; i < N; ++i)
+        {
+            for (int j = 0; j < M; ++j)
+            {
+                if (grid[i][j] != -1)
+                    answer = max(answer, visited[i][j]);
+            }
+        }
+
+        if (answer == 1e9)
+            cout << -1;
+        else
+            cout << answer;
     }
 
 private:
 
     int dy[4]{ 0, 1, 0, -1 };
-    int dx[4]{ 1, 0, -1, 0 };
+    int dx[4]{ 1, 0, -1 ,0 };
+
+    void bfs()
+    {
+        while (!q.empty())
+        {
+            pos cur = q.front();
+            q.pop();
+
+            cur.c++;
+
+            for (int i = 0; i < 4; ++i)
+            {
+                pos next = cur;
+                next.y += dy[i];
+                next.x += dx[i];
+
+                if (next.y >= 0 && next.y < N &&
+                    next.x >= 0 && next.x < M &&
+                    grid[next.y][next.x] != -1 &&
+                    visited[next.y][next.x] > cur.c)
+                {
+                    visited[next.y][next.x] = cur.c;
+                    q.push(next);
+                }
+            }
+        }
+    }
+
 };
 
 int main()
