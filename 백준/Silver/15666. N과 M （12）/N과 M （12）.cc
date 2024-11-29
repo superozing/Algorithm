@@ -23,7 +23,7 @@ class Boj
 private:
     int N, M;
 
-    map<int, int> nums;
+    set<int> nums;
     vector<int> permutation;
 
 public:
@@ -36,7 +36,8 @@ public:
         for (int i = 0; i < N; ++i)
         {
             cin >> in;
-            nums[in] = M;
+            if (nums.find(in) == nums.end())
+                nums.insert(in);
         }
     }
 
@@ -44,11 +45,9 @@ public:
     {
         for (auto& it : nums)
         {
-            permutation.push_back(it.first);
-            it.second--;
+            permutation.push_back(it);
             dfs();
             permutation.pop_back();
-            it.second++;
         }
     }
 
@@ -66,11 +65,9 @@ private:
 
         for (auto it = nums.find(permutation.back()); it != nums.end(); ++it)
         {
-            permutation.push_back(it->first);
-            it->second--;
+            permutation.push_back(*it);
             dfs();
             permutation.pop_back();
-            it->second++;
         }
 
         return;
