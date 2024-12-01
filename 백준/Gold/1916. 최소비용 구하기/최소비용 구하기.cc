@@ -1,25 +1,31 @@
-// ConsoleApplication1.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
+///////////////////////////////////////////
 #include <iostream>
 #include <algorithm>
 #include <vector>
 #include <list>
+#include <stack>
 #include <set>
 #include <map>
 #include <string>
 #include <queue>
+#include <deque>
+#include <unordered_map>
+#include <unordered_set>
+#include <bitset>
+#include <cmath>
 
 using namespace std;
-constexpr auto INF = 100000000;
 
-struct vtx
+#define endl ("\n")
+
+struct edge
 {
-    int cost;
-    int node;
+    int to, cost;
 };
 
 struct cmp
 {
-    bool operator()(vtx& a, vtx& b)
+    bool operator() (edge& a, edge& b)
     {
         return a.cost > b.cost;
     }
@@ -27,73 +33,76 @@ struct cmp
 
 class Boj
 {
-public:
-    int N; // 도시 개수
-    int M; // 버스 개수
-    int S; // 시작 정점의 번호
-    int D; // 끝 정점의 번호
+private:
+    int N, M; // 도시 개수, 버스 개수
+    int S, D; // 시작 지점, 도착 지점
 
-    vector<vector<vtx>> graph;
-    vector<int> dist;
+    vector<vector<edge>> edges;
+
+    priority_queue<edge, vector<edge>, cmp> pq;
+
+public:
 
     void input()
     {
         cin >> N >> M;
-        graph.resize(N);
-        dist.resize(N, INF);
-
+        edges.resize(N + 1);
+        
+        int s, e, w;
         for (int i = 0; i < M; ++i)
         {
-            int cur;
-            cin >> cur;
-            vtx v;
-            cin >> v.node >> v.cost;
-            --v.node;
-            graph[cur - 1].push_back(v);
+            cin >> s >> e >> w;
+            edges[s].push_back({ e, w });
         }
 
         cin >> S >> D;
-        dist[S - 1] = 0;
     }
 
     void progress()
     {
-        priority_queue<vtx, vector<vtx>, cmp> q;
-        q.push({ 0, S - 1 });
+        vector<int> d(N + 1, 1e9);
 
-        while (!q.empty())
+        d[S] = 0;
+
+        pq.push({ S, 0 });
+
+        while (!pq.empty())
         {
-            vtx v = q.top();
-            q.pop();
-            int cost = v.cost;
-            int idx = v.node;
-            
-            if (dist[idx] < cost)
+            auto cNode = pq.top();
+            pq.pop();
+
+            if (d[cNode.to] < cNode.cost)
                 continue;
-            
-            for (int i = 0; i < graph[idx].size(); ++i)
+
+            for (int i = 0; i < edges[cNode.to].size(); ++i)
             {
-                vtx nextv = graph[idx][i];
-                if (cost + graph[idx][i].cost < dist[graph[idx][i].node])
+                auto& cEdge = edges[cNode.to][i];
+                if (d[cEdge.to] > d[cNode.to] + cEdge.cost)
                 {
-                    dist[graph[idx][i].node] = cost + graph[idx][i].cost;
-                    q.push({ cost + graph[idx][i].cost , graph[idx][i].node });
+                    d[cEdge.to] = d[cNode.to] + cEdge.cost;
+                    pq.push(cEdge);
                 }
             }
         }
 
-        cout << dist[D - 1];
+        cout << d[D];
     }
 
+private:
 
 };
 
 int main()
 {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
     Boj boj;
+
     boj.input();
     boj.progress();
 
-
     return 0;
 }
+
