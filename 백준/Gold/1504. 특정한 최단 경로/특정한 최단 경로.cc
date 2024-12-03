@@ -147,6 +147,9 @@ private:
             edge cur = pq.top();
             pq.pop();
 
+            if (dist[cur.dest] > cur.weight)
+                continue;
+
             for (int i = 0; i < edges[cur.dest].size(); ++i)
             {
                 edge next = edges[cur.dest][i];
