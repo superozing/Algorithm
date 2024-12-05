@@ -61,7 +61,7 @@ public:
             pos cur = q.front();
             q.pop();
 
-            if (minTime[K] < cur.c)
+            if (minTime[K] <= cur.c)
                 break;
 
             for (auto& nextX : { cur.x + 1, cur.x - 1, cur.x * 2 })
