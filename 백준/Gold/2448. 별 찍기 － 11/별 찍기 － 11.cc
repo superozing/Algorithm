@@ -66,11 +66,7 @@ private:
         // 3개의 삼각형을 재귀 호출 해야 해요.
         // 모든 입력은 왼 쪽 하단을 기준으로 생각하고 재귀호출 해볼까요?
         int div2Side = sideLength / 2;
-        int div2Y = startY / 2;
-        int div2X = startX / 2;
 
-        // 첫 입력이 6이라면, y를 startY, startY, 3(startY - sideLength) 위치에 해야 해요.
-        // 첫 입력이 6이라면, x를 startX, 6(startX + sideLength), 3(startX + sideLength - sideLength / 2) 위치에 해야 해요.
         // 왼 쪽 아래 삼각형
         divideAndConquer(startY, startX, div2Side);
 
