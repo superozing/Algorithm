@@ -41,6 +41,13 @@ public:
 
     void progress()
     {
+        if (N == K)
+        {
+            cout << 0 << endl << 1;
+            return;
+        }
+
+
         int answer = 0; // 개수
         
         queue<pos> q;
@@ -54,33 +61,19 @@ public:
             pos cur = q.front();
             q.pop();
 
-            if (cur.x == K)
-                ++answer;
+            if (minTime[K] < cur.c)
+                break;
 
-            cur.c++;
+            for (auto& nextX : { cur.x + 1, cur.x - 1, cur.x * 2 })
+            {
+                if (nextX <= 100000 && nextX >= 0 && minTime[nextX] >= cur.c + 1)
+                {
+                    minTime[nextX] = cur.c + 1;
+                    q.push({ nextX, cur.c + 1 });
 
-            pos next = cur;
-            next.x += 1;
-            if (next.x <= 100000 && minTime[next.x] >= next.c)
-            {
-                minTime[next.x] = next.c;
-                q.push(next);
-            }
-            
-            next = cur;
-            next.x -= 1;
-            if (next.x >= 0 && minTime[next.x] >= next.c)
-            {
-                minTime[next.x] = next.c;
-                q.push(next);
-            }
-
-            next = cur;
-            next.x *= 2;
-            if (next.x <= 100000 && minTime[next.x] >= next.c)
-            {
-                minTime[next.x] = next.c;
-                q.push(next);
+                    if (nextX == K)
+                        ++answer;
+                }
             }
         }
 
