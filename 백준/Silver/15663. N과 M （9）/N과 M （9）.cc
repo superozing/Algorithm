@@ -32,6 +32,8 @@ public:
     {
         cin >> N >> M;
 
+        permutation.reserve(M + 1);
+
         int in;
         for (int i = 0; i < N; ++i)
         {
@@ -67,18 +69,18 @@ private:
             return;
         }
 
-        for (auto it = begin(nums); it != nums.end(); ++it)
+        for (auto& it : nums)
         {
-            if (it->second == 0)
+            if (it.second == 0)
                 continue;
 
-            permutation.push_back(it->first);
-            --it->second;
+            permutation.push_back(it.first);
+            --it.second;
 
             dfs(cnt + 1);
 
             permutation.pop_back();
-            ++it->second;
+            ++it.second;
         }
 
         return;
