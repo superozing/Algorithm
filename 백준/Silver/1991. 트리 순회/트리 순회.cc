@@ -20,7 +20,6 @@ using namespace std;
 
 struct node
 {
-    char c;
     char l;
     char r;
 };
@@ -44,7 +43,6 @@ public:
             cin >> in;
 
             int idx = Idx(in);
-            v[idx].c = in;
             cin >> v[idx].l;
             cin >> v[idx].r;
         }
