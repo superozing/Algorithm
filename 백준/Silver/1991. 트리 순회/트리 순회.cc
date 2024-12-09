@@ -41,10 +41,8 @@ public:
         for (int i = 0; i < N; ++i)
         {
             cin >> in;
-
-            int idx = Idx(in);
-            cin >> v[idx].l;
-            cin >> v[idx].r;
+            cin >> v[Idx(in)].l;
+            cin >> v[Idx(in)].r;
         }
     }
 
@@ -66,39 +64,33 @@ private:
 
     void preOrder(char c)
     {
-        int idx = Idx(c);
-
         cout << c;
 
-        if (v[idx].l != '.')
-            preOrder(v[idx].l);
+        if (v[Idx(c)].l != '.')
+            preOrder(v[Idx(c)].l);
 
-        if (v[idx].r != '.')
-            preOrder(v[idx].r);
+        if (v[Idx(c)].r != '.')
+            preOrder(v[Idx(c)].r);
     }
 
     void inOrder(char c)
     {
-        int idx = Idx(c);
-
-        if (v[idx].l != '.')
-            inOrder(v[idx].l);
+        if (v[Idx(c)].l != '.')
+            inOrder(v[Idx(c)].l);
         
         cout << c;
 
-        if (v[idx].r != '.')
-            inOrder(v[idx].r);
+        if (v[Idx(c)].r != '.')
+            inOrder(v[Idx(c)].r);
     }
 
     void postOrder(char c)
     {
-        int idx = Idx(c);
-
-        if (v[idx].l != '.')
-            postOrder(v[idx].l);
+        if (v[Idx(c)].l != '.')
+            postOrder(v[Idx(c)].l);
         
-        if (v[idx].r != '.')
-            postOrder(v[idx].r);
+        if (v[Idx(c)].r != '.')
+            postOrder(v[Idx(c)].r);
 
         cout << c;
     }
