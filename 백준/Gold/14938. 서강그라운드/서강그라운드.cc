@@ -18,11 +18,6 @@ using namespace std;
 
 #define endl ("\n")
 
-struct edge
-{
-    int dest, weight;
-};
-
 class Boj
 {
 private:
@@ -55,9 +50,7 @@ public:
         }
 
         for (int i = 0; i < dist.size(); ++i)
-        {
             dist[i][i] = 0;
-        }
     }
 
     void progress()
