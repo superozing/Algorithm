@@ -31,7 +31,7 @@ private:
     int Y, X;
 
     vector<vector<int>> grid;
-    vector<vector<bool>> visited;
+    vector<vector<bool>> outline;
 
 public:
 
@@ -39,6 +39,7 @@ public:
     {
         cin >> Y >> X;
         grid.resize(Y, vector<int>(X));
+        outline.resize(Y, vector<bool>(X));
 
         for (int i = 0; i < grid.size(); ++i)
         for (int j = 0; j < grid[0].size(); ++j)
@@ -54,22 +55,6 @@ public:
             ++answer;
             setOuterLine();
             meltCheese();
-
-            //cout << "visited: " << answer << endl;
-            //for (int i = 0; i < grid.size(); ++i)
-            //{
-            //    for (int j = 0; j < grid[0].size(); ++j)
-            //        cout << visited[i][j] << " ";
-            //    cout << endl;
-            //}
-
-            //cout << "grid: " << answer << endl;
-            //for (int i = 0; i < grid.size(); ++i)
-            //{
-            //    for (int j = 0; j < grid[0].size(); ++j)
-            //        cout << grid[i][j] << " ";
-            //    cout << endl;
-            //}
         }
         
         cout << answer;
@@ -107,11 +92,13 @@ private:
     {
         queue<pos> q;
 
-        visited = vector<vector<bool>>(Y, vector<bool>(X, false));
+        for (int i = 0; i < Y; ++i)
+        for (int j = 0; j < X; ++j)
+            outline[i][j] = false;
 
         q.push({ 0, 0 });
 
-        visited[0][0] = true;
+        outline[0][0] = true;
 
         while (!q.empty())
         {
@@ -126,9 +113,9 @@ private:
 
                 if (next.y >= 0 && next.y < Y &&
                     next.x >= 0 && next.x < X &&
-                    !visited[next.y][next.x] && grid[next.y][next.x] != 1)
+                    !outline[next.y][next.x] && grid[next.y][next.x] != 1)
                 {
-                    visited[next.y][next.x] = true;
+                    outline[next.y][next.x] = true;
                     q.push(next);
                 }
             }
@@ -156,7 +143,7 @@ private:
 
                     if (cur.y >= 0 && cur.y < Y &&
                         cur.x >= 0 && cur.x < X &&
-                        visited[cur.y][cur.x])
+                        outline[cur.y][cur.x])
                     {
                         ++outerCnt;
                     }
