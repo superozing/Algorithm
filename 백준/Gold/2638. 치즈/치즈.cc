@@ -96,9 +96,20 @@ private:
         for (int j = 0; j < X; ++j)
             outline[i][j] = false;
 
-        q.push({ 0, 0 });
-
-        outline[0][0] = true;
+        for (int i = 0; i < Y; ++i)
+        {
+            q.push({ i, 0 });
+            outline[i][0] = true;
+            q.push({ i, X - 1 });
+            outline[i][X - 1] = true;
+        }
+        for (int i = 0; i < X; ++i)
+        {
+            q.push({ 0, i });
+            outline[0][i] = true;
+            q.push({ Y - 1, i });
+            outline[Y - 1][i] = true;
+        }
 
         while (!q.empty())
         {
