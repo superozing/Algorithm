@@ -1,43 +1,68 @@
 #include <string>
 #include <vector>
-#include <list>
-#include <iostream>
+#include <queue>
 
 using namespace std;
+
+vector<bool> visited;
+
+void bfs(int start, vector<vector<int>>& com)
+{
+    queue<int> q;
+    q.push(start);
+    visited[start] = true;
+    
+    while (!q.empty())
+    {
+        int cur = q.front();
+        q.pop();
+        
+        for (int i = 0; i < com[cur].size(); ++i)
+        {
+            if (com[cur][i] && !visited[i])
+            {
+                visited[i] = true;                
+                q.push(i);
+            }
+        }
+    }
+}
 
 int solution(int n, vector<vector<int>> computers) 
 {
     int answer = 0;
-    vector<bool> visited(n, false);
+    visited.resize(n);
     
-    for (int j = 0; j < n; ++j)
+    for (int i = 0; i < visited.size(); ++i)
     {
-        // 방문한 컴일 경우 continue;
-        if (visited[j])
-            continue;
-        
-        ++answer;
-        
-        list<int> q;
-        visited[j] = true;
-        q.push_back(j);
-
-        while (!q.empty())
+        if (!visited[i])
         {
-            int curCom = q.front();
-            q.pop_front();
-
-            for (int i = 0; i < n; ++i)
-            {
-                if (computers[curCom][i] && !visited[i])
-                {
-                    q.push_back(i);
-                    visited[i] = true;
-                }
-            }
-        }
+            ++answer;
+            bfs(i, computers);
+        } 
     }
-    
     
     return answer;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
