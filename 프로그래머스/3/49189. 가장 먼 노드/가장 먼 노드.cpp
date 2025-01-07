@@ -15,7 +15,7 @@ struct cmp
 {
     bool operator() (tEdge& a, tEdge& b)
     {
-        return a.cost < b.cost;
+        return a.cost > b.cost;
     }
 };
 
