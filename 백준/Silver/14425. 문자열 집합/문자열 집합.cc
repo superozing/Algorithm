@@ -45,11 +45,8 @@ struct Trie
         return next[idx]->find(str + 1);
     }
 
-    Trie() 
-        : finish(false) 
+    Trie() : next{}, finish(false)
     {
-        for (int i = 0; i < 26; ++i)
-            next[i] = nullptr;
     }
     ~Trie() {}
 
