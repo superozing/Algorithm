@@ -15,21 +15,21 @@ int main()
 	int M, N;
 	cin >> M >> N;
 
-	vector<char> v(N + 1);
+	vector<bool> v(N + 1);
 
 	v[0] = true;
 	v[1] = true;
 	
-	for (int i = 2; i * i <= N; ++i)
+	for (int i = 2; i * i < v.size(); ++i)
 	{
 		if (v[i] == true)
 			continue;
 
-		for (int j = i * 2; j <= N; j += i)
+		for (int j = i * 2; j < v.size(); j += i)
 			v[j] = true;
 	}
 
-	for (int i = M; i <= N; ++i)
+	for (int i = M; i < v.size(); ++i)
 	{
 		if (!v[i])
 			cout << i << endl;
