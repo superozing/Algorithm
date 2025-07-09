@@ -14,15 +14,14 @@ int main()
 
 	int M, N;
 	cin >> M >> N;
-
+	 
 	vector<bool> v(N + 1);
-
 	v[0] = true;
 	v[1] = true;
-	
+
 	for (int i = 2; i * i < v.size(); ++i)
 	{
-		if (v[i] == true)
+		if (v[i])
 			continue;
 
 		for (int j = i * 2; j < v.size(); j += i)
@@ -30,10 +29,8 @@ int main()
 	}
 
 	for (int i = M; i < v.size(); ++i)
-	{
 		if (!v[i])
 			cout << i << endl;
-	} 
-	 
+
 	return 0;
 }
