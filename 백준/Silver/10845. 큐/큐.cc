@@ -4,6 +4,8 @@
 #include <queue>
 #include <string>
 
+#define endl '\n'
+
 using namespace std;
 
 int main()
@@ -55,7 +57,7 @@ int main()
 		}
 		else if (in == "back")
 		{
-			cout << (q.empty() ? -1 : lastnumber) << endl;
+			cout << (q.empty() ? -1 : q.back()) << endl;
 		}
 	}
 
