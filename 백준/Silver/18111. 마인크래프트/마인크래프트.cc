@@ -32,16 +32,13 @@ int GetTime(vector<vector<int>>& grid, int N, int M, int B, int height)
 
 		// 블록을 인벤토리에 넣기
 		B += grid[y][x] - height;
-		
-		// 블록을 정상 크기로 맞추기
-		grid[y][x] = height;
 	}
 
 	// 블록 추가하기
 	for (int y = 0; y < N; ++y)
 	for (int x = 0; x < M; ++x)
 	{
-		if (grid[y][x] == height)
+		if (grid[y][x] >= height)
 			continue;
 
 		// 시간 증가
@@ -53,9 +50,6 @@ int GetTime(vector<vector<int>>& grid, int N, int M, int B, int height)
 		// 블록이 모자란가요?
 		if (B < 0)
 			return -1;
-		
-		// 블록을 정상 크기로 맞추기
-		grid[y][x] = height;
 	}
 
 	return time;
@@ -71,7 +65,6 @@ int main()
 
 	vector<vector<int>> grid(N, vector<int>(M));
 
-
 	int l = 256, r = 0;
 	for (auto& vec : grid)
 	for (int& i : vec)
@@ -86,8 +79,7 @@ int main()
 	for (; l <= r; ++l)
 	{
 		int height = l;
-		vector<vector<int>> copyGrid(grid);
-		int curTime = GetTime(copyGrid, N, M, B, height);
+		int curTime = GetTime(grid, N, M, B, height);
 
 		if (curTime == -1)
 			break;
@@ -97,7 +89,6 @@ int main()
 			ansHeight = height;
 			ansTime = curTime;
 		}
-
 		// cout << "l: " << l << ", r: " << r << ", h: " << height << endl;
 		// cout << "curTime: " << curTime << endl;
 		// cout << "ansTime: " << ansTime << ", ansHeight: " << ansHeight << endl << endl;
