@@ -1,81 +1,38 @@
-///////////////////////////////////////////
 #include <iostream>
 #include <algorithm>
-#include <vector>
-#include <list>
-#include <stack>
-#include <set>
-#include <map>
-#include <string>
-#include <queue>
-#include <deque>
-#include <unordered_map>
-#include <unordered_set>
-#include <bitset>
 #include <cmath>
+
+#include <vector>
+
+#define endl '\n'
 
 using namespace std;
 
-#define endl ("\n")
-
-class Boj
-{
-private:
-    int N;
-    vector<int> dp;
-
-public:
-
-    void input()
-    {
-        cin >> N;
-        dp.resize(N + 1);
-    }
-
-    void progress()
-    {
-        dp[1] = 1;
-        if (N == 1)
-        {
-            cout << dp[1] << endl;
-            return;
-        }
-
-        dp[2] = 3; // =, ||, ㅁ
-        if (N == 2)
-        {
-            cout << dp[2] << endl;
-            return;
-        }
-
-        dp[3] = dp[2] + dp[1] * 2;    // =|, |||, ㅁ|,   |=, |ㅁ
-        if (N == 3)
-        {
-            cout << dp[3] << endl;
-            return;
-        }
-
-        for (int i = 4; i <= N; ++i)
-            dp[i] = (dp[i - 1] + dp[i - 2] * 2) % 10007;
-
-        cout << dp.back();
-    }
-
-private:
-
-};
-
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	
+	int N;
+	cin >> N;
 
-    Boj boj;
+	vector<int> dp(N + 1);
 
-    boj.input();
-    boj.progress();
+	dp[1] = 1;
+	dp[2] = 3;
 
-    return 0;
+	if (N <= 2)
+	{
+		cout << dp[N];
+		return 0;
+	}
+
+	for (int i = 3; i < dp.size(); ++i)
+		dp[i] = (dp[i - 1] + dp[i - 2] * 2) % 10007;
+
+
+	cout << dp.back() % 10007;
+
+	return 0;
 }
-
+ 
