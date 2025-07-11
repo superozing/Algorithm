@@ -1,80 +1,67 @@
-///////////////////////////////////////////
 #include <iostream>
 #include <algorithm>
-#include <vector>
-#include <list>
-#include <stack>
-#include <set>
-#include <map>
-#include <string>
-#include <queue>
-#include <deque>
-#include <unordered_map>
-#include <unordered_set>
-#include <bitset>
 #include <cmath>
+
+#include <queue>
+
+#define endl '\n'
 
 using namespace std;
 
-struct node
-{
-    int n, c;
-};
-
-class Boj
-{
-private:
-    int N;
-
-public:
-
-    void input()
-    {
-        cin >> N;
-    }
-
-    void progress()
-    {
-        queue<node> q;
-
-        q.push({ N, 0 });
-
-        while (!q.empty())
-        {
-            node cur = q.front();
-            q.pop();
-
-            if (cur.n == 1)
-            {
-                cout << cur.c;
-                break;
-            }
-
-            if (cur.n % 3 == 0)
-                q.push({ cur.n / 3, cur.c + 1 });
-            if (cur.n % 2 == 0)
-                q.push({ cur.n / 2, cur.c + 1 });
-            
-            q.push({ cur.n - 1, cur.c + 1 });
-        }
-
-    }
-
-private:
-
-};
-
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+	ios::sync_with_stdio(false);
+	cin.tie(0);
 
-    Boj boj;
+	int N;
+	cin >> N;
 
-    boj.input();
-    boj.progress();
+	if (N == 1)
+	{
+		cout << 0;
+		return 0;
+	}
 
-    return 0;
+	queue<pair<int, int>> q;
+
+	q.push({ N, 0 });
+
+	while (!q.empty())
+	{
+		auto cur = q.front();
+		q.pop();
+
+		cur.second++;
+
+		if (cur.first % 3 == 0)
+		{
+			if (cur.first / 3 == 1)
+			{
+				cout << cur.second;
+				break;
+			}
+
+			q.push({ cur.first / 3, cur.second });
+		}
+		if (cur.first % 2 == 0)
+		{
+			if (cur.first / 2 == 1)
+			{
+				cout << cur.second;
+				break;
+			}
+
+			q.push({ cur.first / 2, cur.second });
+		}
+		
+		cur.first--;
+		if (cur.first == 1)
+		{
+			cout << cur.second;
+			break;
+		}
+		q.push(cur);
+	}
+
+	return 0;
 }
-
