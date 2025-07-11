@@ -1,74 +1,39 @@
-///////////////////////////////////////////
 #include <iostream>
 #include <algorithm>
-#include <vector>
-#include <list>
-#include <stack>
-#include <set>
-#include <map>
-#include <string>
-#include <queue>
-#include <deque>
-#include <unordered_map>
-#include <unordered_set>
-#include <bitset>
 #include <cmath>
+
+#include <unordered_map>
+
+#define endl '\n'
 
 using namespace std;
 
-#define endl "\n"
-
-class Boj
-{
-private:
-    int N;
-    int M;
-
-    unordered_map<string, string> um;
-
-public:
-
-    void input()
-    {
-        cin >> N >> M;
-
-        string s;
-        while (N--)
-        {
-            cin >> s;
-            cin >> um[s];
-        }
-    }
-
-    void progress()
-    {
-        string answer;
-        string s;
-        while (M--)
-        {
-            cin >> s;
-            answer += um[s];
-            answer += endl;
-        }
-
-        cout << answer;
-    }
-
-private:
-
-};
-
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+	ios::sync_with_stdio(false);
+	cin.tie(0);
 
-    Boj boj;
+	int N, M;
+	cin >> N >> M;
 
-    boj.input();
-    boj.progress();
+	unordered_map<string, string> um;
 
-    return 0;
+	string answer;
+	answer.reserve(20 * N);
+
+	string in;
+	while (N--)
+	{
+		cin >> in;
+		cin >> um[in];
+	}
+	while (M--)
+	{
+		cin >> in;
+		answer += um[in] + '\n';
+	}
+
+	cout << answer;
+
+	return 0;
 }
-
