@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cmath>
 
+#include <vector>
 #include <queue>
 
 #define endl '\n'
@@ -23,6 +24,7 @@ int main()
 	}
 
 	queue<pair<int, int>> q;
+	vector<bool> visited(N + 1);
 
 	q.push({ N, 0 });
 
@@ -33,17 +35,17 @@ int main()
 
 		cur.second++;
 
-		if (cur.first % 3 == 0)
+		if (cur.first % 3 == 0 && !visited[cur.first / 3])
 		{
 			if (cur.first / 3 == 1)
 			{
 				cout << cur.second;
 				break;
 			}
-
+			visited[cur.first / 3] = true;
 			q.push({ cur.first / 3, cur.second });
 		}
-		if (cur.first % 2 == 0)
+		if (cur.first % 2 == 0 && !visited[cur.first / 2])
 		{
 			if (cur.first / 2 == 1)
 			{
@@ -51,15 +53,17 @@ int main()
 				break;
 			}
 
+			visited[cur.first / 2] = true;
 			q.push({ cur.first / 2, cur.second });
 		}
-		
+
 		cur.first--;
-		if (cur.first == 1)
+		if (cur.first == 1 && !visited[cur.first])
 		{
 			cout << cur.second;
 			break;
 		}
+		visited[cur.first] = true;
 		q.push(cur);
 	}
 
