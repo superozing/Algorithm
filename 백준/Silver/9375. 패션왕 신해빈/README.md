@@ -8,32 +8,28 @@
 
 ### 분류
 
-조합론, 자료 구조, 해시를 사용한 집합과 맵, 수학
+수학, 자료 구조, 집합과 맵, 조합론, 해시를 사용한 집합과 맵
 
 ### 제출 일자
 
-2024년 11월 20일 09:05:55
+2025년 7월 12일 04:18:18
 
 ### 문제 설명
 
-<p>Spies use attributes to disguise themselves to make sure that they are not recognized. For example, when putting on sunglasses, a spy suddenly looks completely different and cannot be recognized anymore. Every combination of attributes gives a different appearance, but not all combinations are possible. For example, a hat and a turban are both headgear and cannot be used at the same time. Given the list of available attributes, compute how many distinct disguises can be made.</p>
+<p>해빈이는 패션에 매우 민감해서 한번 입었던 옷들의 조합을 절대 다시 입지 않는다. 예를 들어 오늘 해빈이가 안경, 코트, 상의, 신발을 입었다면, 다음날은 바지를 추가로 입거나 안경대신 렌즈를 착용하거나 해야한다. 해빈이가 가진 의상들이 주어졌을때 과연 해빈이는 알몸이 아닌 상태로 며칠동안 밖에 돌아다닐 수 있을까?</p>
 
 ### 입력 
 
- <p>On the ﬁrst line one positive number: the number of test cases, at most 100. After that per test case:</p>
+ <p>첫째 줄에 테스트 케이스가 주어진다. 테스트 케이스는 최대 100이다.</p>
 
 <ul>
-	<li>one line with an integer n (0 ≤ n ≤ 30): the number of available attributes.</li>
-	<li>n lines with two space-separated strings: the name and the category of the attribute.</li>
+	<li>각 테스트 케이스의 첫째 줄에는 해빈이가 가진 의상의 수 n(0 ≤ n ≤ 30)이 주어진다.</li>
+	<li>다음 n개에는 해빈이가 가진 의상의 이름과 의상의 종류가 공백으로 구분되어 주어진다. 같은 종류의 의상은 하나만 입을 수 있다.</li>
 </ul>
 
-<p>All strings consist of at least 1 and at most 20 lowercase letters. Within a test case all names are distinct.</p>
+<p>모든 문자열은 1이상 20이하의 알파벳 소문자로 이루어져있으며 같은 이름을 가진 의상은 존재하지 않는다.</p>
 
 ### 출력 
 
- <p>Per test case:</p>
-
-<ul>
-	<li>one line with an integer: the number of possible distinct disguises that can be made with the given attributes, such that at most one attribute from each category is used.</li>
-</ul>
+ <p>각 테스트 케이스에 대해 해빈이가 알몸이 아닌 상태로 의상을 입을 수 있는 경우를 출력하시오.</p>
 
