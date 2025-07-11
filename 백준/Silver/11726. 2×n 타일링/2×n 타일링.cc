@@ -1,57 +1,37 @@
-////////////////////////////////////////////
-
 #include <iostream>
 #include <algorithm>
+#include <cmath>
+
 #include <vector>
-#include <list>
-#include <set>
-#include <map>
-#include <string>
-#include <queue>
+
+#define endl '\n'
 
 using namespace std;
 
-
-class Boj
-{
-private:
-    int N; // 2*N 크기의 직사각형
-
-public:
-    void input()
-    {
-        cin >> N;
-    }
-
-    void progress()
-    {
-        vector<int> dp(N + 1);
-
-        /*
-        2*0 -> 0
-        2*1 -> 1
-        2*2 -> 2
-        2*3 -> 3
-        2*4 -> 음...
-        */
-
-        dp[0] = 0;
-        dp[1] = 1;
-        dp[2] = 2;
-
-        for (int i = 3; i <= N; ++i)
-            dp[i] = dp[i - 2] + dp[i - 1] % 10007;
-        
-        cout << dp[N] % 10007;
-    }
-
-};
-
 int main()
 {
-    Boj boj;
-    boj.input();
-    boj.progress();
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	
+	int N;
+	cin >> N;
 
-    return 0;
+	vector<int> dp(N + 1);
+
+	if (N <= 2)
+	{
+		cout << N;
+		return 0;
+	}
+
+	dp[1] = 1;
+	dp[2] = 2;
+	for (int i = 3; i < dp.size(); ++i)
+		dp[i] = (dp[i - 1] + dp[i - 2]) % 10007;
+
+
+	cout << dp.back() % 10007;
+
+	return 0;
 }
+ 
