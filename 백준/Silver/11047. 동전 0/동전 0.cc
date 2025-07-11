@@ -1,56 +1,35 @@
-
-///////////////////////////////////
 #include <iostream>
 #include <algorithm>
-#include <vector>
-#include <list>
-#include <set>
-#include <map>
-#include <string>
-#include <queue>
-#include <unordered_map>
-#include <unordered_set>
 #include <cmath>
+
+#include <vector>
+
+#define endl '\n'
 
 using namespace std;
 
-class Boj
-{
-private:
-    int N, K; // 동전 종류의 개수, 목표 원
-    vector<int> coins;
-public:
-    void input()
-    {
-        cin >> N >> K;
-        coins.resize(N);
-        for (int i = 0; i < N; ++i)
-            cin >> coins[i];
-    }
-
-    void progress()
-    {
-        int r = N - 1, answer = 0;
-
-        while (K != 0)
-            coins[r] <= K ? answer += K / coins[r], K %= coins[r] : --r;
-
-        cout << answer;
-    }
-
-private:
-};
-
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
+	ios::sync_with_stdio(false);
+	cin.tie(0);
 
-    Boj boj;
+	int N, K;
+	cin >> N >> K;
 
-    boj.input();
-    boj.progress();
+	vector<int> v(N);
 
-    return 0;
+	for (int i = N - 1; i >= 0; --i)
+		cin >> v[i];
+
+	int answer = 0;
+
+	for (int i = 0; K != 0; ++i)
+	{
+		answer += K / v[i];
+		K %= v[i];
+	}
+
+	cout << answer;
+
+	return 0;
 }
-
