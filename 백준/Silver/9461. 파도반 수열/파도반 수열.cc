@@ -1,75 +1,39 @@
-///////////////////////////////////////////
 #include <iostream>
 #include <algorithm>
-#include <vector>
-#include <list>
-#include <stack>
-#include <set>
-#include <map>
-#include <string>
-#include <queue>
-#include <deque>
-#include <unordered_map>
-#include <unordered_set>
-#include <bitset>
 #include <cmath>
+
+#include <vector>
+
+#define endl '\n'
 
 using namespace std;
 
-#define endl ("\n")
-
-class Boj
-{
-private:
-    int T;
-    vector<long long> dp;
-
-public:
-
-    void input()
-    {
-        // i = i-1 + (i-1 - i-2) + 1?
-        cin >> T;
-    
-        dp.resize(101);
-        dp[1] = 1;
-        dp[2] = 1;
-        dp[3] = 1;
-        dp[4] = 2;
-        dp[5] = 2;
-        dp[6] = 3;
-    }
-
-    void progress()
-    {
-       for (int i = 7; i <= 100; ++i)
-           dp[i] = dp[i - 1] + dp[i - 5];
-
-       // 1 1 1 2 2 3 4 5 7 9 12 ?
-      
-       int in;
-       while (T--)
-       {
-           cin >> in;
-           cout << dp[in] << endl;
-       }
-    }
-
-private:
-
-};
-
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+	ios::sync_with_stdio(false);
+	cin.tie(0);
 
-    Boj boj;
+	vector<long long> dp(101);
 
-    boj.input();
-    boj.progress();
+	dp[1] = 1;
+	dp[2] = 1;
+	dp[3] = 1;
+	dp[4] = 2;
+	dp[5] = 2;
 
-    return 0;
+	for (int i = 6; i < dp.size(); ++i)
+		dp[i] = dp[i - 1] + dp[i - 5];
+
+	int T;
+	cin >> T;
+
+	int in;
+	while (T--)
+	{
+		cin >> in;
+		cout << dp[in] << endl;
+	}
+
+	return 0;
 }
-
+ 
