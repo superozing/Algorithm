@@ -1,131 +1,87 @@
-///////////////////////////////////////////
 #include <iostream>
 #include <algorithm>
-#include <vector>
-#include <list>
-#include <stack>
-#include <set>
-#include <map>
-#include <string>
-#include <queue>
-#include <deque>
-#include <unordered_map>
-#include <unordered_set>
-#include <bitset>
 #include <cmath>
+
+#include <vector>
+#include <queue>
+
+#define endl '\n'
 
 using namespace std;
 
-#define endl ("\n")
+int dY[4]{ 1, 0, -1, 0 };
+int dX[4]{ 0, 1, 0, -1 };
 
-struct pos
+void BFS(vector<vector<bool>>& grid, pair<int, int> p)
 {
-    int x, y;
-};
+	queue<pair<int, int>> q;
+	q.push(p);
+	grid[p.first][p.second] = false;
 
-class Boj
+	while (!q.empty())
+	{
+		auto cur = q.front();
+		q.pop();
+
+		for (int i = 0; i < 4; ++i)
+		{
+			auto next = cur;
+			next.first += dY[i];
+			next.second += dX[i];
+
+			if (next.first >= 0 && next.first < grid.size() && 
+				next.second >= 0 && next.second < grid[0].size() &&
+				grid[next.first][next.second])
+			{
+				grid[next.first][next.second] = false;
+				q.push(next);
+			}
+		}
+	}
+}
+
+int EarthwormCount(vector<vector<bool>>& grid)
 {
-private:
-    int T; // 테케 개수
-    int M, N; // 가로 길이, 세로 길이
+	int worm = 0;
 
-    int K; // 배추 개수
+	for (int y = 0; y < grid.size(); ++y)
+	for (int x = 0; x < grid[0].size(); ++x)
+	{
+		if (grid[y][x])
+		{
+			BFS(grid, { y, x });
+			++worm;
+		}
+	}
 
-    vector<vector<bool>> grid;
-
-public:
-
-    void input()
-    {
-        cin >> T;
-
-    }
-
-    void progress()
-    {
-        while (T--)
-        {
-            cin >> M >> N >> K;
-            grid.clear();
-            grid.resize(M, vector<bool>(N));
-
-            int x, y;
-            while (K--)
-            {
-                cin >> x >> y;
-                grid[x][y] = true;
-            }
-
-
-            ////////////////
-
-            int answer = 0;
-
-            for (int x = 0; x < grid.size(); ++x)
-            for (int y = 0; y < grid[0].size(); ++y)
-            {
-                if (grid[x][y] == true)
-                {
-                    ++answer;
-                    bfs(x, y);
-                }
-            }
-
-            cout << answer << endl;
-        }
-    }
-
-private:
-
-    int dx[4]{ 1, 0, -1, 0 };
-    int dy[4]{ 0, 1, 0, -1 };
-
-    void bfs(int x, int y)
-    {
-        queue<pos> q;
-
-        q.push({ x, y });
-
-        grid[x][y] = false;
-
-        while (!q.empty())
-        {
-            pos cur = q.front();
-            q.pop();
-
-            for (int i = 0; i < 4; ++i)
-            {
-                pos np = cur;
-
-                np.x += dx[i];
-                np.y += dy[i];
-
-                if (np.x >= 0 && np.x < grid.size() &&
-                    np.y >= 0 && np.y < grid[0].size() &&
-                    grid[np.x][np.y])
-                {
-                    q.push(np);
-                    grid[np.x][np.y] = false;
-                }
-            }
-
-        }
-
-    }
-
-};
+	return worm;
+}
 
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+	ios::sync_with_stdio(false);
+	cin.tie(0);
 
-    Boj boj;
+	int T;
+	cin >> T;
 
-    boj.input();
-    boj.progress();
+	while (T--)
+	{
+		int M, N, K;
+		cin >> M >> N >> K;
 
-    return 0;
+		vector<vector<bool>> grid(N, vector<bool>(M));
+
+		int x, y;
+		while (K--)
+		{
+			cin >> x >> y;
+			grid[y][x] = true;
+		}
+
+		cout << EarthwormCount(grid) << endl;
+	}
+
+	return 0;
 }
-
+ 
