@@ -6,12 +6,14 @@
 
 using namespace std;
 
-long long DivAndCon(int A, int B, int C, long long cur)
+long long A, B, C;
+
+long long Div(int cur)
 {
 	if (cur == 1)
 		return A;
 
-	long long k = DivAndCon(A, B, C, cur / 2);
+	long long k = Div(cur / 2);
 
 	if (cur % 2)
 		return k * k % C * A % C;
@@ -24,11 +26,11 @@ int main()
 	ios::sync_with_stdio(false);
 	cin.tie(0);
 
-	long long A, B, C;
 	cin >> A >> B >> C;
-	
+
 	A %= C;
-	cout << DivAndCon(A, B, C, B);
+	
+	cout << Div(B);
 	
 	return 0;
 }
