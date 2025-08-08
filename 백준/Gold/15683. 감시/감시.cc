@@ -28,15 +28,13 @@ int answer = 1e9;
 
 void Mark(int y, int x, int dir)
 {
-	if (y < 0 || x < 0 || y >= N || x >= M || grid[y][x] == 6)
-		return;
+	while (!(y < 0 || x < 0 || y >= N || x >= M || grid[y][x] == 6))
+	{
+		visited[y][x]++;
 
-	visited[y][x]++;
-
-	y += dY[dir];
-	x += dX[dir];
-
-	Mark(y, x, dir);
+		y += dY[dir];
+		x += dX[dir];
+	}
 }
 
 void Mark(int curCam, int dir)
@@ -75,15 +73,13 @@ void Mark(int curCam, int dir)
 
 void Unmark(int y, int x, int dir)
 {
-	if (y < 0 || x < 0 || y >= N || x >= M || grid[y][x] == 6)
-		return;
+	while (!(y < 0 || x < 0 || y >= N || x >= M || grid[y][x] == 6))
+	{
+		visited[y][x]--;
 
-	visited[y][x]--;
-
-	y += dY[dir];
-	x += dX[dir];
-
-	Unmark(y, x, dir);
+		y += dY[dir];
+		x += dX[dir];
+	}
 }
 
 void Unmark(int curCam, int dir)
