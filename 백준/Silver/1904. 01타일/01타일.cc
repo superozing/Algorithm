@@ -4,8 +4,6 @@
 
 #include <vector>
 
-#define endl '\n'
-
 using namespace std;
 
 int main()
@@ -13,20 +11,38 @@ int main()
 	ios::sync_with_stdio(false);
 	cin.tie(0);
 
-	// N = 1일 때 1만 만들 수 있고, N = 2일 때는 00, 11을 만들 수 있다. (01, 10은 만들 수 없게 되었다.) 
-	// 	또한 N = 4일 때는 0011, 0000, 1001, 1100, 1111 등 총 5개의 2진 수열을 만들 수 있다.
-
 	int N;
 	cin >> N;
 
-	vector<int> dp(N + 1);
-	dp[1] = 1;
-	dp[2] = 2;
+	// 타일: 00, 1
 
-	for (int i = 3; i < dp.size(); ++i)
-		dp[i] = (dp[i - 1] + dp[i - 2]) % 15746;
+	// N = 1 일 경우 1
+	// N = 2 일 경우 11, 00
+	// N = 3 일 경우 111, 100, 001
+	// N = 4 일 경우 1111, 1100, 1001, 0011, 0000
+	// dp[i] = dp[i - 1] + dp[i - 2]
 
-	cout << dp.back();
+	if (N <= 2)
+	{
+		if (N == 1)
+			cout << 1;
+		if (N == 2)
+			cout << 2;
+
+		return 0;
+	}
+	
+	int dp[3] { 1, 2, 0 };
+
+	for (int i = 3; i <= N; ++i)
+	{
+		dp[2] = (dp[0] + dp[1]) % 15746;
+		
+		dp[0] = dp[1];
+		dp[1] = dp[2];
+	}
+
+	cout << dp[1];
 
 	return 0;
 }
