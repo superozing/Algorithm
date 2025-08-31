@@ -1,76 +1,44 @@
-////////////////////////////////////////////
-
 #include <iostream>
 #include <algorithm>
+#include <cmath>
+
 #include <vector>
-#include <list>
-#include <set>
-#include <map>
-#include <string>
-#include <queue>
 
 using namespace std;
 
-
-class Boj
-{
-private:
-    int N; // 정수 개수
-    vector<int> nums; // n개의 정수
-
-public:
-    void input()
-    {
-        cin >> N;
-
-        nums.resize(N);
-
-        for (int i = 0; i < N; ++i)
-            cin >> nums[i];
-    }
-
-    void progress()
-    {
-        // 연속된 배열의 요소 중 가장 큰 값.
-        vector<int> dp(N);
-
-        /*
-            10 -4 3 1 5 6 -35 12 21 -1
-            1. 10
-            2. 10과 10 + -4 를 비교해서 10이 더 크기 때문에 10만 기록한 상태, 이전 연산 결과인 10을 max로 두기
-            3. max인 10과, 10 + -4 + 3을 비교해서 큰 값을 골라 넣기
-                만약 second 값이 0보다 작다면 (예를 들어 10 + -12같은 경우.....) 3으로 cur을 바꿔줘야 해요. 
-            4. 10과 10 + -4 + 3 + 1을 비교
-            5. 10과 10 + -4 + 3 + 1 + 5를 비교
-
-            경우의 수가
-            지속한 값에 더한 값이 큰가
-            최대 값이 큰가
-            새로 만드는 값이 큰가
-            이 세 개를 게속 기록해주어야 할 것 같은데
-        */
-
-        int maxValue = 0;
-
-        maxValue = dp[0] = nums[0];
-
-        for (int i = 1; i < N; ++i)
-        {
-            dp[i] = max(dp[i - 1] + nums[i], nums[i]);
-
-            maxValue = max(dp[i], maxValue);
-        }
-
-        cout << maxValue;
-    }
-
-};
-
 int main()
 {
-    Boj boj;
-    boj.input();
-    boj.progress();
+	ios::sync_with_stdio(false);
+	cin.tie(0);
 
-    return 0;
+
+	int N;
+	cin >> N;
+
+	// "연속된" 몇 개의 수를 선택해서 구할 수 있는 합 중 가장 큰 합
+
+	// 매 원소를 방문할 때 마다 answer 에 더 큰 수열의 합을 저장하면 되겠어요.
+	// 만약 원소를 더할 때, 수열의 값이 0보다 적어질 경우 수열의 값을 0으로 초기화 하고 다음 값을 고르면 되겠어요.
+
+	// 굳이 dp를 사용해야 하는가?
+
+	int answer = -1001;
+	
+	int sum = 0;
+
+	while (N--)
+	{
+		int cur;
+		cin >> cur;
+		
+		sum += cur;
+		answer = max(answer, sum);
+
+		if (sum < 0)
+			sum = 0;
+	}
+
+	cout << answer;
+
+	return 0;
 }
