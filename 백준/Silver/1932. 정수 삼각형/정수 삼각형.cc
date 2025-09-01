@@ -41,11 +41,12 @@ public:
 
         for (int i = 2; i <= N; ++i)
         {
+            grid[i].resize(i);
             for (int j = 0; j < i; ++j)
             {
-                cin >> in; 
-                grid[i].push_back(in);
-                
+                cin >> in;
+                grid[i][j] = in;
+
                 if (j == 0)
                     grid[i][0] += grid[i - 1][0];
                 else if (j == i - 1)
