@@ -1,79 +1,40 @@
-///////////////////////////////////////////
 #include <iostream>
 #include <algorithm>
-#include <vector>
-#include <list>
-#include <stack>
-#include <set>
-#include <map>
-#include <string>
-#include <queue>
-#include <deque>
-#include <unordered_map>
-#include <unordered_set>
-#include <bitset>
 #include <cmath>
+
+#include <vector>
 
 using namespace std;
 
-#define endl ("\n")
-
-class Boj
-{
-private:
-    int N;
-
-    vector<vector<int>> grid;
-
-public:
-
-    void input()
-    {
-        cin >> N;
-        grid.resize(N + 1);
-    }
-
-    void progress()
-    {
-        int in;
-        cin >> in;
-        grid[1].push_back(in);
-
-        for (int i = 2; i <= N; ++i)
-        {
-            grid[i].resize(i);
-            for (int j = 0; j < i; ++j)
-            {
-                cin >> in;
-                grid[i][j] = in;
-
-                if (j == 0)
-                    grid[i][0] += grid[i - 1][0];
-                else if (j == i - 1)
-                    grid[i][j] += grid[i - 1][j - 1];
-                else
-                    grid[i][j] += max(grid[i - 1][j - 1], grid[i - 1][j]);
-            }
-        }
-
-        cout << *max_element(begin(grid.back()), end(grid.back()));
-    }
-
-private:
-
-};
-
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+	ios::sync_with_stdio(false);
+	cin.tie(0);
 
-    Boj boj;
+	int N;
+	cin >> N;
 
-    boj.input();
-    boj.progress();
+	vector<int> prevDp(N);
+	vector<int> curDp(N);
 
-    return 0;
+	cin >> prevDp[0];
+
+	for (int i = 2; i <= N; ++i)
+	{
+		for (int j = 0; j < i; ++j)
+			cin >> curDp[j];
+
+		curDp[0] += prevDp[0];
+
+		for (int j = 1; j < i - 1; ++j)
+			curDp[j] += max(prevDp[j - 1], prevDp[j]);
+
+		curDp[i - 1] += prevDp[i - 2];
+
+		swap(curDp, prevDp);
+	}
+
+	cout << *max_element(begin(prevDp), end(prevDp));
+
+	return 0;
 }
-
