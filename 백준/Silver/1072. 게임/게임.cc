@@ -15,7 +15,7 @@ int main()
     long long X, Y, Z;
     cin >> X >> Y;
 
-    Z = Y  * 100 / (double)X;
+    Z = Y * 100 / X;
 
     //cout << Z << endl;
 
@@ -31,7 +31,7 @@ int main()
         long long m = (l + r) / 2;
 
         // m 회 게임을 이겼을 때, Z가 변하는가?
-        long long curZ = (Y + m) * 100 / double(X + m);
+        long long curZ = (Y + m) * 100 / (X + m);
         
         //cout << "l: " << l << ",r: " << r << endl;
         //cout << "m: " << m << ", curZ: " << curZ << endl;
