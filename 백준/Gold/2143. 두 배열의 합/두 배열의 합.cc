@@ -16,8 +16,6 @@ int main()
     cout.tie(0);
     ios_base::sync_with_stdio(false);
 
-    unordered_map<int, int> um;
-
     int T, N, M;
     
     cin >> T;
@@ -32,6 +30,8 @@ int main()
     for (auto& i : B)
         cin >> i;
 
+    vector<int> aSums;
+    vector<int> bSums;
 
     for (int numCount = 1; numCount <= N; ++numCount)
     {
@@ -41,18 +41,16 @@ int main()
         for (int i = 0; i < numCount; ++i)
             sum += A[i];
 
-        um[sum]++;
+        aSums.push_back(sum);
 
         // 2. 순회하며 넣고 빼기
         for (int i = numCount; i < N; ++i)
         {
             sum -= A[i - numCount];
             sum += A[i];
-            um[sum]++;
+            aSums.push_back(sum);
         }
     }
-
-    long long answer = 0;
 
     for (int numCount = 1; numCount <= M; ++numCount)
     {
@@ -62,16 +60,26 @@ int main()
         for (int i = 0; i < numCount; ++i)
             sum += B[i];
 
-        answer += um[T - sum];
+        bSums.push_back(sum);
 
         // 2. 순회하며 넣고 빼기
         for (int i = numCount; i < M; ++i)
         {
             sum -= B[i - numCount];
             sum += B[i];
-            answer += um[T - sum];
+            bSums.push_back(sum);
         }
     }
+
+    if (aSums.size() > bSums.size())
+        swap(aSums, bSums);
+
+    sort(bSums.begin(), bSums.end());
+
+    long long answer = 0;
+
+    for (int i = 0; i < aSums.size(); ++i)
+        answer += (upper_bound(bSums.begin(), bSums.end(), T - aSums[i]) - bSums.begin()) - (lower_bound(bSums.begin(), bSums.end(), T - aSums[i]) - bSums.begin());
 
     cout << answer;
 
